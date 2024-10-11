@@ -1,20 +1,16 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
-import { BrowserRouter } from 'react-router-dom'
+import hexToRgba from './hex-to-rgba'
+import { useForm, useFormWithValidation } from './validation'
+import { useTags } from './use-tags'
+import useRecipes from './use-recipes'
+import useRecipe from './use-recipe'
+import useSubscriptions from './use-subscriptions'
 
-ReactDOM.render(
-  <React.StrictMode>
-    <BrowserRouter>
-      <App />
-    </BrowserRouter>
-  </React.StrictMode>,
-  document.getElementById('root')
-);
-
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
+export {
+  hexToRgba,
+  useForm,
+  useFormWithValidation,
+  useTags,
+  useRecipes,
+  useRecipe,
+  useSubscriptions
+}
