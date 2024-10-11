@@ -1,0 +1,15 @@
+Django
+django-filter
+djangorestframework
+djoser
+webcolors
+psycopg2-binary
+Pillow
+pytest
+pytest-django
+pytest-pythonpath
+PyYAML
+gunicorn
+flake8
+flake8-isort
+shortuuid
