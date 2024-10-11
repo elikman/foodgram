@@ -7,7 +7,7 @@ services:
       - ./pg_data:/var/lib/postgresql/data
 
   backend:
-    image: marisgan/foodgram_backend:latest
+    image: elik807/foodgram_backend:latest
     env_file: .env
     depends_on:
       - db
@@ -16,20 +16,20 @@ services:
       - ./media:/media
     
   frontend:
-    image: marisgan/foodgram_frontend:latest
+    image: elik807/foodgram_frontend:latest
     env_file: .env
     command: cp -r /app/build/. /frontend_static/
     volumes:
       - static:/frontend_static
 
   nginx:
-    image: marisgan/foodgram_nginx:latest
+    image: elik807/foodgram_nginx:latest
     env_file: .env
     depends_on:
       - backend
       - frontend
     ports:
-      - 9000:80
+      - 8000:80
     volumes:
       - static:/static
       - ./media:/media
