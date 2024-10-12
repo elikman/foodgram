@@ -1,21 +1,21 @@
-from rest_framework.routers import DefaultRouter
+from django.conf import settings
 from django.urls import include, path
+from rest_framework.routers import DefaultRouter, SimpleRouter
 
-from api.views import (
-    IngredientViewSet, RecipeViewSet, TagViewSet, MemberViewSet
-)
+from .views import IngredientsView, RecipeViewSet, TagsView, UserViewSet
 
+app_name = 'api_v1'
 
-app_name = 'api'
+Router = DefaultRouter if settings.DEBUG else SimpleRouter
 
-router = DefaultRouter()
-router.register('recipes', RecipeViewSet, basename='recipe')
-router.register('ingredients', IngredientViewSet, basename='ingredient')
-router.register('tags', TagViewSet, basename='tag')
-router.register('users', MemberViewSet, basename='user')
+router_v1 = Router()
+router_v1.register(r'users', UserViewSet, basename='users')
+router_v1.register(r'tags', TagsView, basename='tags')
+router_v1.register(r'ingredients', IngredientsView, basename='ingredients')
+router_v1.register(r'recipes', RecipeViewSet, basename='recipes')
 
 
 urlpatterns = [
-    path('auth/', include('djoser.urls.authtoken')),
-    path('', include(router.urls)),
+    path('', include(router_v1.urls), name='routers'),
+    path('auth/', include('djoser.urls.authtoken'), name='auth'),
 ]

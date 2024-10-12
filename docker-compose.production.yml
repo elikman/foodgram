@@ -1,39 +1,36 @@
+volumes:
+  pg_data:
+  static:
+  media:
+
 services:
   db:
-    container_name: db
     image: postgres:13.10
     env_file: .env
     volumes:
-      - ./pg_data:/var/lib/postgresql/data
-
+      - pg_data:/var/lib/postgresql/data
   backend:
-    image: elik807/foodgram_backend:latest
-    env_file: .env
     depends_on:
       - db
-    volumes:
-      - static:/backend_static
-      - ./media:/media
-    
-  frontend:
-    image: elik807/foodgram_frontend:latest
+    image: elik807/foodgram_backend
     env_file: .env
+    volumes:
+      - static:/backend_static/
+      - media:/app/media/
+  frontend:
+    env_file: .env
+    image: elik807/foodgram_frontend
     command: cp -r /app/build/. /frontend_static/
     volumes:
       - static:/frontend_static
-
-  nginx:
-    image: elik807/foodgram_nginx:latest
-    env_file: .env
+  gateway:
     depends_on:
-      - backend
       - frontend
+      - backend
+    image: elik807/foodgram_gateway
+    env_file: .env
+    volumes:
+      - static:/static/
+      - media:/media/
     ports:
       - 8000:80
-    volumes:
-      - static:/static
-      - ./media:/media
-      - ./docs/:/usr/share/nginx/html/api/docs/
-
-volumes:
-  static:
