@@ -56,7 +56,7 @@ jobs:
         with:
           context: ./backend/
           push: true
-          tags: sainekt/foodgram_backend:latest 
+          tags: elik807/foodgram_backend:latest 
 
   build_frontend_and_push_to_docker_hub:
     if: ${{ github.ref == 'refs/heads/main' }}
@@ -77,7 +77,7 @@ jobs:
         with:
           context: ./frontend/
           push: true
-          tags: sainekt/foodgram_frontend:latest 
+          tags: elik807/foodgram_frontend:latest 
   build_gateway_and_push_to_docker_hub:
     if: ${{ github.ref == 'refs/heads/main' }}
     name: Push gateway Docker image to DockerHub
@@ -97,7 +97,7 @@ jobs:
         with:
           context: ./gateway/
           push: true
-          tags: sainekt/foodgram_gateway:latest 
+          tags: elik807/foodgram_gateway:latest 
   deploy:
     runs-on: ubuntu-latest
     needs: 
