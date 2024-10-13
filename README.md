@@ -35,7 +35,7 @@ DB_HOST=
 DB_PORT=
 DJANGO_SECRET_KEY=
 DJANGO_DEBUG=True
-ALLOWED_HOSTS=
+DJANGO_ALLOWED_HOSTS=
 ```
 
 ### Как запустить бэкенд локально без Docker:
@@ -150,4 +150,4 @@ sudo docker compose -f docker-compose.production.yml exec backend python manage.
 ### Автор
 Финальное задание курса [Python Backend Developer Яндекс Практикум](https://practicum.yandex.ru/backend-developer-ab/)
 
-Выполнила  [Набиев Эльтадж](https://github.com/elikman/foodgram.git) (https://t.me/bombalaev57)
+Выполнила  [Набиев Эльтадж](https://github.com/elikman/foodgram.git) https://t.me/bombalaev57
