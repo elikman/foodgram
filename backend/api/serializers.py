@@ -15,7 +15,7 @@ from common.constants import (AMOUNT, AUTHOR, COOKING_TIME,
                               MIN_COOKING_TIME,
                               MIN_AMOUNT, MAX_AMOUNT)
 from recipes.models import Ingredient, IngredientsRecipes, Recipe, Tag
-from users.models import Subscriber
+#from users.models import Subscriber
 from utils.short_link_gen import get_link
 
 from .mixins import GetUserMixin

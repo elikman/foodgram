@@ -76,7 +76,6 @@ class IngredientsRecipes(models.Model):
 
 class RecipeQuerySet(models.QuerySet):
 
-
     def with_related_data(self):
         return self.select_related('author')
 
@@ -85,7 +84,6 @@ class RecipeQuerySet(models.QuerySet):
 
 
 class RecipeManager(models.Manager):
-
 
     def get_queryset(self):
         return (
