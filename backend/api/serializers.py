@@ -143,7 +143,8 @@ class RecipesReadSerializer(GetUserMixin, serializers.ModelSerializer):
 
     def get_ingredients(self, obj):
         return [
-            IngredientsInRecipeSerializer(ingredient).data for ingredient in obj.recipe_ingredients.all()
+            IngredientsInRecipeSerializer(ingredient).data
+            for ingredient in obj.recipe_ingredients.all()
         ]
 
 
