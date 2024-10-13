@@ -6,6 +6,7 @@ from common.constants import MAX_32, MAX_64, MAX_128, MAX_256
 
 User = get_user_model()
 
+
 class Tag(models.Model):
     name = models.CharField(max_length=MAX_32, verbose_name='Название')
     slug = models.SlugField(
@@ -20,6 +21,7 @@ class Tag(models.Model):
 
     def __str__(self):
         return self.name
+
 
 class Ingredient(models.Model):
     name = models.CharField(
@@ -44,6 +46,7 @@ class Ingredient(models.Model):
 
     def __str__(self):
         return f'{self.name}, {self.measurement_unit}'
+
 
 class IngredientsRecipes(models.Model):
     ingredient = models.ForeignKey(
@@ -70,20 +73,27 @@ class IngredientsRecipes(models.Model):
     def __str__(self):
         return f'{self.ingredient} в {self.recipe}'
 
+
 class RecipeQuerySet(models.QuerySet):
+
+
     def with_related_data(self):
         return self.select_related('author')
 
     def with_prefetch_data(self):
         return self.prefetch_related('tags', 'ingredients')
 
+
 class RecipeManager(models.Manager):
+
+
     def get_queryset(self):
         return (
             RecipeQuerySet(self.model)
             .with_related_data()
             .with_prefetch_data()
         )
+
 
 class Recipe(models.Model):
     ingredients = models.ManyToManyField(
@@ -135,6 +145,7 @@ class Recipe(models.Model):
     def __str__(self):
         return self.name
 
+
 class TagsRecipes(models.Model):
     tag = models.ForeignKey(
         Tag, on_delete=models.SET_NULL, null=True
@@ -156,6 +167,7 @@ class TagsRecipes(models.Model):
     def __str__(self):
         return f"{self.tag} в {self.recipe}"
 
+
 class ShoppingCart(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE)
@@ -174,6 +186,7 @@ class ShoppingCart(models.Model):
 
     def __str__(self):
         return f"{self.user}'s shopping cart: {self.recipe}"
+
 
 class FavoriteRecipes(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)

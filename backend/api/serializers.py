@@ -11,7 +11,8 @@ from common.constants import (AMOUNT, AUTHOR, COOKING_TIME,
                               ERROR_REQUIRED_FIELD, ERROR_TAGS, ID, IMAGE,
                               INGREDIENTS, IS_FAVORITED, IS_IN_SHOPPING_CART,
                               MEASUREMENT_UNIT, NAME, REQUEST, SHORT_LINK,
-                              SLUG, TAGS, TEXT, MAX_COOKING_TIME, MIN_COOKING_TIME,
+                              SLUG, TAGS, TEXT, MAX_COOKING_TIME,
+                              MIN_COOKING_TIME,
                               MIN_AMOUNT, MAX_AMOUNT)
 from recipes.models import Ingredient, IngredientsRecipes, Recipe, Tag
 from users.models import Subscriber
