@@ -11,7 +11,8 @@ from common.constants import (AMOUNT, AUTHOR, COOKING_TIME,
                               ERROR_REQUIRED_FIELD, ERROR_TAGS, ID, IMAGE,
                               INGREDIENTS, IS_FAVORITED, IS_IN_SHOPPING_CART,
                               MEASUREMENT_UNIT, NAME, REQUEST, SHORT_LINK,
-                              SLUG, TAGS, TEXT)
+                              SLUG, TAGS, TEXT, MAX_COOKING_TIME, MIN_COOKING_TIME,
+                              MIN_AMOUNT, MAX_AMOUNT)
 from recipes.models import Ingredient, IngredientsRecipes, Recipe, Tag
 from users.models import Subscriber
 from utils.short_link_gen import get_link
@@ -45,9 +46,10 @@ class UserSerializer(GetUserMixin, UserSerializer):
         )
 
     def get_is_subscribed(self, obj):
-        if not (user := self.get_user_object()):
+        user = self.get_user_object()
+        if not user:
             return False
-        return Subscriber.objects.filter(user=user, subscriber=obj).exists()
+        return user.subscriptions.filter(subscriber=obj).exists()
 
 
 class SubscribeSerializer(UserSerializer):
@@ -114,6 +116,11 @@ class IngredientsInRecipeCreateSerializer(serializers.ModelSerializer):
     id = serializers.PrimaryKeyRelatedField(
         queryset=Ingredient.objects.all()
     )
+    amount = serializers.IntegerField(
+        min_value=MIN_AMOUNT,
+        max_value=MAX_AMOUNT
+
+    )
 
     class Meta:
         model = IngredientsRecipes
@@ -151,6 +158,10 @@ class RecipesWriteSerializer(serializers.ModelSerializer):
         required=True
     )
     ingredients = IngredientsInRecipeCreateSerializer(many=True, required=True)
+    cooking_time = serializers.IntegerField(
+        min_value=MIN_COOKING_TIME,
+        max_value=MAX_COOKING_TIME
+    )
 
     class Meta:
         model = Recipe
@@ -161,21 +172,15 @@ class RecipesWriteSerializer(serializers.ModelSerializer):
 
     def validate_ingredients(self, value):
         if not value:
-            raise serializers.ValidationError(
-                ERROR_INGREDIENTS
-            )
-        ingredient_set = {i[ID] for i in value}
-        if len(ingredient_set) != len(value):
+            raise serializers.ValidationError(ERROR_INGREDIENTS)
+        if len(set(ingredient[ID] for ingredient in value)) != len(value):
             raise serializers.ValidationError(ERROR_DUBLE_INGREDIENT)
         return value
 
     def validate_tags(self, value):
         if not value:
-            raise serializers.ValidationError(
-                ERROR_NONE_TAG
-            )
-        tags_set = {i for i in value}
-        if len(tags_set) != len(value):
+            raise serializers.ValidationError(ERROR_NONE_TAG)
+        if len(set(value)) != len(value):
             raise serializers.ValidationError(ERROR_DUBLE_TAG)
         return value
 

@@ -15,5 +15,4 @@ def get_shopping_list(user):
             if ingredient.ingredient not in data:
                 data[ingredient.ingredient] = 0
             data[ingredient.ingredient] += ingredient.amount
-    file = get_pdf(data)
-    return file
+    return get_pdf(data)

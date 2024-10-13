@@ -51,6 +51,7 @@ class User(AbstractUser):
     class Meta:
         verbose_name = 'Пользователь'
         verbose_name_plural = 'Пользователи'
+        ordering = ['username']
 
     def __str__(self):
         return self.username
@@ -74,3 +75,7 @@ class Subscriber(models.Model):
         ]
         verbose_name = 'Подписчик'
         verbose_name_plural = 'Подписчики'
+        ordering = ['user', 'subscriber']
+
+    def __str__(self):
+        return f"{self.user} подписан на {self.subscriber}"
