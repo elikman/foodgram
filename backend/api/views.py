@@ -22,7 +22,6 @@ from common.constants import (AVATAR, ERROR_RECIPE_FAVORITE_DOES_NOT_EXISTS,
 from recipes.models import (FavoriteRecipes, Ingredient, Recipe, ShoppingCart,
                             Tag)
 from users.models import Subscriber
-
 from .filters import IngredienFilterSet, RecipeFilterSet
 from .mixins import ListRetriveMixin
 from .pagination import RecipesPagination
@@ -144,15 +143,11 @@ class RecipeViewSet(viewsets.ModelViewSet):
         queryset = super().get_queryset()
         if not user.is_authenticated:
             return queryset
-        shopping_cart_exists = Exists(ShoppingCart.objects.filter(
-            user=user, recipe=OuterRef('pk')))
-        favorite_recipes_exists = Exists(FavoriteRecipes.objects.filter(
-            user=user, recipe=OuterRef('pk')))
-        queryset = queryset.annotate(
-            is_in_shopping_cart=shopping_cart_exists,
-            is_favorited=favorite_recipes_exists
+
+        return queryset.annotate(
+            is_in_shopping_cart=Exists(ShoppingCart.objects.filter(user=user, recipe=OuterRef('pk'))),
+            is_favorited=Exists(FavoriteRecipes.objects.filter(user=user, recipe=OuterRef('pk')))
         )
-        return queryset
 
     def get_serializer_class(self):
         if self.request.method in SAFE_METHODS:
