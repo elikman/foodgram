@@ -1,8 +1,10 @@
 from django.contrib.auth import get_user_model
-from django.core.validators import MinValueValidator
+from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db import models
 
-from common.constants import MAX_32, MAX_64, MAX_128, MAX_256
+from common.constants import (MAX_32, MAX_64, MAX_128, MAX_256,
+                              MAX_AMOUNT, MIN_AMOUNT,
+                              MIN_COOKING_TIME, MAX_COOKING_TIME)
 
 User = get_user_model()
 
@@ -34,8 +36,8 @@ class Ingredient(models.Model):
     )
 
     class Meta:
-        verbose_name = 'Ингридиент'
-        verbose_name_plural = 'Ингридиенты'
+        verbose_name = 'Ингредиент'
+        verbose_name_plural = 'Ингредиенты'
         ordering = ['name']
         constraints = [
             models.UniqueConstraint(
@@ -52,22 +54,31 @@ class IngredientsRecipes(models.Model):
     ingredient = models.ForeignKey(
         Ingredient,
         on_delete=models.CASCADE,
+        verbose_name='Ингредиент'
     )
     recipe = models.ForeignKey(
         'Recipe',
         on_delete=models.CASCADE,
+        verbose_name='Рецепт'
     )
-    amount = models.IntegerField(
-        verbose_name='Количество игридиента',
-        validators=[MinValueValidator(1)],
+    amount = models.PositiveSmallIntegerField(
+        verbose_name='Количество ингредиента',
+        validators=[
+            MinValueValidator(MIN_AMOUNT),
+            MaxValueValidator(MAX_AMOUNT)
+        ],
         error_messages={
-            'amount': 'Значение должно быть больш 0.'}
+            'amount': {
+                'min_value': 'Количество должно быть больше 0.',
+                'max_value': 'Количество не должно превышать 32,000.'
+            }
+        }
     )
 
     class Meta:
         default_related_name = 'recipe_ingredients'
-        verbose_name = 'Ингридиенты в рецепте'
-        verbose_name_plural = 'Ингридиенты в рецептах'
+        verbose_name = 'Ингредиенты в рецепте'
+        verbose_name_plural = 'Ингредиенты в рецептах'
         ordering = ['recipe', 'ingredient']
 
     def __str__(self):
@@ -111,9 +122,18 @@ class Recipe(models.Model):
         max_length=MAX_256,
     )
     text = models.TextField(verbose_name='Описание')
-    cooking_time = models.IntegerField(
+    cooking_time = models.PositiveSmallIntegerField(
         verbose_name='Время приготовления (мин.)',
-        validators=[MinValueValidator(1)]
+        validators=[
+            MinValueValidator(MIN_COOKING_TIME),
+            MaxValueValidator(MAX_COOKING_TIME)
+        ],
+        error_messages={
+            'cooking_time': {
+                'min_value': 'Время приготовления должно быть больше 0.',
+                'max_value': 'Время приготовления не должно превышать 32,000 минут.'
+            }
+        }
     )
     author = models.ForeignKey(
         User,
@@ -146,9 +166,13 @@ class Recipe(models.Model):
 
 class TagsRecipes(models.Model):
     tag = models.ForeignKey(
-        Tag, on_delete=models.SET_NULL, null=True
+        Tag, on_delete=models.SET_NULL, null=True,
+        verbose_name='Тег'
     )
-    recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE)
+    recipe = models.ForeignKey(
+        Recipe, on_delete=models.CASCADE,
+        verbose_name='Рецепт'
+    )
 
     class Meta:
         default_related_name = 'recipe_tags'
@@ -167,8 +191,16 @@ class TagsRecipes(models.Model):
 
 
 class ShoppingCart(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE)
+    user = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        verbose_name='Пользователь'
+    )
+    recipe = models.ForeignKey(
+        Recipe,
+        on_delete=models.CASCADE,
+        verbose_name='Рецепт'
+    )
 
     class Meta:
         default_related_name = 'shopping_cart'
@@ -187,8 +219,16 @@ class ShoppingCart(models.Model):
 
 
 class FavoriteRecipes(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE)
+    user = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        verbose_name='Пользователь'
+    )
+    recipe = models.ForeignKey(
+        Recipe,
+        on_delete=models.CASCADE,
+        verbose_name='Рецепт'
+    )
 
     class Meta:
         default_related_name = 'favorite_recipes'
