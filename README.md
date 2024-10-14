@@ -151,3 +151,4 @@ sudo docker compose -f docker-compose.production.yml exec backend python manage.
 Финальное задание курса [Python Backend Developer Яндекс Практикум](https://practicum.yandex.ru/backend-developer-ab/)
 
 Выполнил  [Набиев Эльтадж](https://github.com/elikman/foodgram.git) https://t.me/bombalaev57
+Ссылка на сайт : https://foodidof.serveftp.com/signup
