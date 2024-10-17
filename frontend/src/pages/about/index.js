@@ -34,12 +34,14 @@ const About = ({ updateOrders, orders }) => {
         </div>
         <aside>
           <h2 className={styles.additionalTitle}>
+            Ссылки
           </h2>
           <div className={styles.text}>
             <p className={styles.textItem}>
+              Код проекта находится тут - <a href="#" className={styles.textLink}>Github</a>
             </p>
             <p className={styles.textItem}>
-              Автор проекта: <a href="https://t.me/bombalaev57" className={styles.textLink}>Набиев Эльтадж</a>
+              Автор проекта: <a href="#" className={styles.textLink}>Имя Автора</a>
             </p>
           </div>
         </aside>

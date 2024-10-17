@@ -140,11 +140,7 @@ sudo docker compose -f docker-compose.production.yml exec backend python manage.
 ```
 ##### Загрузить список ингредиентов в базу данных:
 ``` 
-sudo docker compose -f docker-compose.production.yml exec backend python manage.py import_ingredients
-``` 
-##### Загрузить тестовые данные:
-``` 
-sudo docker compose -f docker-compose.production.yml exec backend python manage.py import_tags
+sudo docker compose -f docker-compose.production.yml exec backend python manage.py load_ingredients
 ``` 
 
 ### Автор

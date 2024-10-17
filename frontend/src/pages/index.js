@@ -1,35 +1,35 @@
-import SignIn from './signin'
-import SignUp from './signup'
-import SingleCard from './single-card'
-import RecipeEdit from './recipe-edit'
-import Cart from './cart'
-import Favorites from './favorites'
-import Subscriptions from './subscriptions'
-import RecipeCreate from './recipe-create'
-import User from './user'
-import ChangePassword from './change-password'
 import Main from "./main";
-import Technologies from "./technologies"
-import UpdateAvatar from "./update-avatar";
+import SignIn from "./signin";
+import SignUp from "./signup";
+import SingleCard from "./single-card";
+import RecipeEdit from "./recipe-edit";
+import Cart from "./cart";
+import Favorites from "./favorites";
+import Subscriptions from "./subscriptions";
+import RecipeCreate from "./recipe-create";
+import User from "./user";
+import ChangePassword from "./change-password";
 import About from "./about";
-import NotFound from "./not-found";
+import Technologies from "./technologies";
+import UpdateAvatar from "./update-avatar";
 import ResetPassword from "./password-reset";
+import NotFound from "./not-found";
 
 export {
-    Main,
-    SignIn,
-    SingleCard,
-    SignUp,
-    RecipeEdit,
-    Cart,
-    Favorites,
-    Subscriptions,
-    RecipeCreate,
-    User,
-    ChangePassword,
-    Technologies,
-    ResetPassword,
-    NotFound,
-    About,
-    UpdateAvatar
-}
+  Main,
+  Technologies,
+  About,
+  ResetPassword,
+  SignIn,
+  SingleCard,
+  SignUp,
+  RecipeEdit,
+  Cart,
+  Favorites,
+  Subscriptions,
+  RecipeCreate,
+  User,
+  ChangePassword,
+  UpdateAvatar,
+  NotFound,
+};

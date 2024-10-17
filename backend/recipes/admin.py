@@ -1,78 +1,56 @@
+# для входа в админку: shvab-vladimir@yandex.ru pythonpracticum
 from django.contrib import admin
 from django.contrib.auth import get_user_model
 
-from .models import (FavoriteRecipes, Ingredient, IngredientsRecipes, Recipe,
-                     ShoppingCart, Tag, TagsRecipes)
-
-admin.site.empty_value_display = 'Не задано'
+from .models import Ingredient, Recipe, RecipeIngredient, Tag
 
 User = get_user_model()
 
 
-class TagsRecipesInline(admin.TabularInline):
-    model = TagsRecipes
-    extra = 1
-
-
-@admin.register(Tag)
-class TagAdmin(admin.ModelAdmin):
-    list_display = ('id', 'name', 'slug')
-    search_fields = ('name', 'slug')
-    list_editable = ('name', 'slug')
-
-
-@admin.register(Ingredient)
-class IngredientAdmin(admin.ModelAdmin):
-    list_display = ('name', 'measurement_unit')
-    search_fields = ('name',)
-    list_display_links = ('name',)
-
-
-@admin.register(IngredientsRecipes)
-class IngredientsRecipesAdmin(admin.ModelAdmin):
-    list_display = ('ingredient', 'recipe')
-    list_display_links = ('recipe',)
-    search_fields = ('ingredient__name', 'recipe__name')
-    list_editable = ('ingredient',)
-    prefetch_related = ('recipe_ingredients',)
+class RecipeIngredientInline(admin.TabularInline):
+    model = RecipeIngredient
+    extra = 0
 
 
 @admin.register(Recipe)
 class RecipeAdmin(admin.ModelAdmin):
-    list_display = ('id', 'name', 'get_author_username', 'favorite_count')
-    search_fields = ('author__username', 'name',)
-    list_display_links = ('id', 'name')
-    list_filter = ('tags__name',)
-    inlines = [TagsRecipesInline]
+    fields = [
+        'name',
+        'image',
+        'text',
+        'cooking_time',
+        'tags',
+        'short_link',
+        'favorite_count',
+    ]
+    readonly_fields = ['short_link', 'favorite_count']
+    filter_horizontal = ('tags',)
+    inlines = [RecipeIngredientInline]
+    list_display = ['name', 'author']
+    search_fields = ['author__username', 'name']
+    list_filter = ['tags']
 
-    def get_author_username(self, obj):
-        return obj.author.username
-    get_author_username.short_description = 'Автор'
-
+    @admin.display(description="Количество добавлений в избранное")
     def favorite_count(self, obj):
-        return obj.favorite_recipes.count()
-    favorite_count.admin_order_field = 'favorite_recipes'
-    favorite_count.short_description = 'Добавлений в избранное'
+        return obj.favorites.count()
+
+    def save_model(self, request, obj, form, change):
+        obj.author = request.user
+        super().save_model(request, obj, form, change)
 
 
-@admin.register(TagsRecipes)
-class TagsRecipesAdmin(admin.ModelAdmin):
-    list_display = ('id', 'tag', 'recipe')
-    search_fields = ('tag__name', 'recipe__name')
+@admin.register(Ingredient)
+class IngredientAdmin(admin.ModelAdmin):
+    list_display = ['name', 'measurement_unit']
+    search_fields = ['name']
 
 
-@admin.register(ShoppingCart)
-class ShoppingCartAdmin(admin.ModelAdmin):
-    list_display = (
-        'user', 'recipe'
-    )
-    search_fields = ('user__username', 'recipe__name')
+@admin.register(Tag)
+class TagAdmin(admin.ModelAdmin):
+    list_display = ['name']
 
 
-@admin.register(FavoriteRecipes)
-class FavoriteRecipesAdmin(admin.ModelAdmin):
-    list_display = (
-        'user', 'recipe',
-    )
-    list_display_links = ('user', 'recipe',)
-    search_fields = ('user__username', 'recipe__name')
+@admin.register(RecipeIngredient)
+class RecipeIngredientAdmin(admin.ModelAdmin):
+    list_display = ['recipe', 'ingredient']
+    search_fields = ['recipe']

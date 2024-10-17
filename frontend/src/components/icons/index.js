@@ -1,20 +1,53 @@
-const UserIcon = (props) => {
-  return (
-    <svg
-      width={20}
-      height={20}
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-      {...props}
-    >
-      <path
-        d="M17.5 18.333V16.39c0-1.031-.417-2.02-1.16-2.75a3.994 3.994 0 00-2.798-1.139H5.625c-1.05 0-2.057.41-2.799 1.139a3.855 3.855 0 00-1.16 2.75v1.944M9.583 9.167a3.75 3.75 0 100-7.5 3.75 3.75 0 000 7.5z"
-        stroke="#000"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </svg>
-  );
-}
+import StarIcon from "./star";
+import StarActiveIcon from "./star-active";
+import LikeIcon from "./like";
+import LikeActiveIcon from "./like-active";
+import ClockIcon from "./clock";
+import UserIcon from "./user";
+import CheckIcon from "./check";
+import ArrowLeftIcon from "./arrow-left";
+import ArrowRightIcon from "./arrow-right";
+import PlusIcon from "./plus";
+import DoneIcon from "./done";
+import IngredientDelete from "./ingredient-delete";
+import SavedMenu from "./saved-menu";
+import SubscriptionsMenu from "./subscriptions-menu";
+import LogoutMenu from "./logout-menu";
+import ResetPasswordMenu from "./reset-password-menu";
+import Cart from "./cart";
+import AddUser from "./add-user";
+import ReceiptDelete from "./receipt-delete";
+import ArrowExpand from "./arrow-expand";
+import PaginationArrow from "./pagination-arrow";
+import PopupClose from "./popup-close";
+import AddAvatarIcon from "./add-avatar";
+import DeleteAvatarIcon from "./delete-avatar";
+import CopyLinkIcon from "./copy-link";
 
-export default UserIcon
+export default {
+  StarIcon,
+  ReceiptDelete,
+  PopupClose,
+  Cart,
+  StarActiveIcon,
+  AddUser,
+  ClockIcon,
+  UserIcon,
+  PaginationArrow,
+  CheckIcon,
+  ArrowLeftIcon,
+  IngredientDelete,
+  ArrowRightIcon,
+  PlusIcon,
+  DoneIcon,
+  LikeIcon,
+  LikeActiveIcon,
+  ArrowExpand,
+  SavedMenu,
+  SubscriptionsMenu,
+  LogoutMenu,
+  ResetPasswordMenu,
+  AddAvatarIcon,
+  DeleteAvatarIcon,
+  CopyLinkIcon,
+};

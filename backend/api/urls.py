@@ -1,21 +1,23 @@
-from django.conf import settings
 from django.urls import include, path
-from rest_framework.routers import DefaultRouter, SimpleRouter
+from rest_framework import routers
 
-from .views import IngredientsView, RecipeViewSet, TagsView, UserViewSet
+from .views import (
+    FoodgramUserViewSet,
+    IngredientViewSet,
+    RecipeViewSet,
+    TagViewSet,
+)
 
-app_name = 'api_v1'
+api_urls = []
+v1_router_api = routers.DefaultRouter()
+v1_router_api.register('users', FoodgramUserViewSet, basename='user')
+v1_router_api.register('tags', TagViewSet, basename='tag')
+v1_router_api.register('ingredients', IngredientViewSet, basename='ingredient')
+v1_router_api.register('recipes', RecipeViewSet, basename='recipes')
 
-Router = DefaultRouter if settings.DEBUG else SimpleRouter
-
-router_v1 = Router()
-router_v1.register(r'users', UserViewSet, basename='users')
-router_v1.register(r'tags', TagsView, basename='tags')
-router_v1.register(r'ingredients', IngredientsView, basename='ingredients')
-router_v1.register(r'recipes', RecipeViewSet, basename='recipes')
-
+api_urls.extend(v1_router_api.urls)
 
 urlpatterns = [
-    path('', include(router_v1.urls), name='routers'),
-    path('auth/', include('djoser.urls.authtoken'), name='auth'),
+    path('auth/', include('djoser.urls.authtoken')),
+    path('', include(api_urls)),
 ]

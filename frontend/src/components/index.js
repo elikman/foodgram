@@ -12,6 +12,7 @@ import Form from './form'
 import ProtectedRoute from './protected-route'
 import Input from './input'
 import AccountMenu from './account-menu'
+import AccountMenuMobile from './account-menu-mobile'
 import Nav from './nav'
 import Tag from './tag'
 import TagsContainer from './tags-container'
@@ -25,49 +26,46 @@ import Subscription from './subscription'
 import SubscriptionList from './subscription-list'
 import FileInput from './file-input'
 import IngredientsSearch from './ingredients-search'
-import AccountMenuMobile from './account-menu-mobile'
-import Popup from './popup'
-import NavMenu from './nav-menu'
-import Orders from './orders'
+import FormTitle from './form-title'
 import Account from './account'
-import AccountMobile from "./account-mobile";
-import FormTitle from "./form-title";
-
-
+import AccountMobile from './account-mobile'
+import Orders from './orders'
+import NavMenu from './nav-menu'
+import Popup from './popup'
 
 export {
-    Header,
-    Footer,
-    LinkComponent,
-    Container,
-    Main,
-    Card,
-    Icons,
-    Button,
-    CardList,
-    Title,
-    Form,
-    ProtectedRoute,
-    Input,
-    AccountMenu,
-    Nav,
-    Tag,
-    TagsContainer,
-    Textarea,
-    Checkbox,
-    CheckboxGroup,
-    Pagination,
-    Purchase,
-    PurchaseList,
-    Subscription,
-    SubscriptionList,
-    FileInput,
-    IngredientsSearch,
-    AccountMenuMobile,
-    Popup,
-    NavMenu,
-    Orders,
-    Account,
-    AccountMobile,
-    FormTitle
+  Popup,
+  Header,
+  AccountMenuMobile,
+  AccountMobile,
+  FormTitle,
+  NavMenu,
+  Orders,
+  Footer,
+  LinkComponent,
+  Container,
+  Main,
+  Card,
+  Icons,
+  Button,
+  Account,
+  CardList,
+  Title,
+  Form,
+  ProtectedRoute,
+  Input,
+  AccountMenu,
+  Nav,
+  Tag,
+  TagsContainer,
+  Textarea,
+  Checkbox,
+  CheckboxGroup,
+  Pagination,
+  Purchase,
+  PurchaseList,
+  Subscription,
+  SubscriptionList,
+  FileInput,
+  IngredientsSearch
 }
