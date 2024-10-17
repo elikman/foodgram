@@ -72,7 +72,7 @@ class SubscribeSerializer(UserSerializer):
         )
 
     def get_recipes_count(self, obj):
-        return len(obj.recipes.all())
+        return obj.recipes.count()
 
     def get_recipes(self, obj):
         limit = self.context['request'].query_params.get('recipes_limit')
