@@ -97,57 +97,15 @@ class FollowSerializer(FoodgramUserSerializer):
         return serializer.data
 
     def get_recipes_count(self, obj):
-        return obj.user_recipes.count()
+        return len(obj.recipes.all())
 
-
-class CreateSubscribeSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Follow
-        fields = (
-            'user',
-            'author',
-        )
-        validators = [
-            UniqueTogetherValidator(
-                queryset=Follow.objects.all(),
-                fields=('user', 'author'),
-                message='Вы уже подписаны на этого пользователя!',
-            )
-        ]
-
-    def validate_author(self, author):
-        if author == self.context['request'].user:
-            raise ValidationError('Нельзя подписаться на самого себя!')
-        return author
-
-    def to_representation(self, instance):
-        serializer = FollowSerializer(
-            instance.author,
-            context={'request': self.context.get('request')},
-        )
-        return serializer.data
-
-
-class CreateFavoriteSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Favorite
-        fields = (
-            'user',
-            'recipe',
-        )
-        validators = [
-            UniqueTogetherValidator(
-                queryset=Favorite.objects.all(),
-                fields=('user', 'recipe'),
-                message='Рецепт уже добавлен в избранное!',
-            )
-        ]
-
-    def to_representation(self, instance):
-        serializer = RecipeBaseSerializer(
-            instance.recipe,
-            context={'request': self.context.get('request')},
-        )
+    def get_recipes(self, obj):
+        limit = self.context['request'].query_params.get('recipes_limit')
+        if limit and limit.isdigit():
+            queryset = obj.recipes.all()[:int(limit)]
+        else:
+            queryset = obj.recipes.all()
+        serializer = ShortRecipeSerializer(instance=queryset, many=True)
         return serializer.data
 
 
