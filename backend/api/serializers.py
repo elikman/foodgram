@@ -11,10 +11,12 @@ from .validators import validate_recipes_limit
 
 User = get_user_model()
 
+
 class ShortRecipeSerializer(serializers.ModelSerializer):
     class Meta:
         model = Recipe
         fields = ('id', 'name', 'cooking_time', 'image')
+
 
 class FoodgramUserSerializer(UserSerializer):
     is_subscribed = serializers.SerializerMethodField(
