@@ -4,7 +4,7 @@ from rest_framework import serializers
 from rest_framework.validators import UniqueTogetherValidator, ValidationError
 
 from recipes.models import Ingredient, Recipe, RecipeIngredient, Tag
-from users.models import Favorite, Follow, ShoppingCart
+from users.models import ShoppingCart
 
 from .utils import Base64ImageField
 from .validators import validate_recipes_limit
